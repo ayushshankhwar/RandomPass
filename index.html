@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random Password Generator</title>
+    <!-- <link rel="icon" href="https://static.vecteezy.com/system/resources/previews/011/015/345/non_2x/security-concept-secure-information-3d-render-personal-data-free-png.png"> -->
+    <link rel="icon" href="https://static.vecteezy.com/system/resources/previews/010/833/594/non_2x/3d-lock-password-free-png.png">
+    <style>
+      *{
+        padding: 0px;
+        margin: 0px;
+        box-sizing: border-box;
+      }
+        body{
+            padding: 20px;
+            background-color: rgb(18, 18, 18);
+            /* background: linear-gradient(rgb(0, 0, 0),rgb(49, 49, 49),black); */
+            background: radial-gradient(rgb(54, 54, 54),rgb(29, 29, 29),black);
+            /* display: grid; */
+            /* justify-content: center; */
+            color: white;
+            height: 100vh;
+            width: 100vw;
+            /* contain: content; */
+        }
+        h1{
+          font-family: sans-serif;
+          text-align: center;
+          position: fixed;
+          width: 100%;
+          user-select: none;
+          font-size: 8vh;
+          font-variant: small-caps;
+          text-shadow: 2px 2px 10px rgb(0, 128, 137);
+        }
+        .card{
+            background-color:rgb(22, 22, 22);
+            margin: auto;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            margin-top: 17vh;
+            width: 40vw;
+            height: 66vh;
+            border: 2px solid rgb(0, 255, 0);
+            border: 1px solid rgb(0, 255, 0);
+            border-radius: 30px;
+            border-radius: 5px;
+            contain: content;
+            /* background: none; */
+            box-shadow: 0px 0px 52px rgb(0, 255, 0);
+            box-shadow: 0px 0px 10px rgb(0, 255, 0);
+          }
+        .textarea{
+            /* background-color: rgb(188, 187, 186); */
+            background: linear-gradient(to right, rgb(88, 88, 88),rgb(188, 187, 186),rgb(90, 90, 99));
+            box-shadow: inset 1px 1px 5px black;
+            height: 7vh;
+            margin-top: 31px;
+            outline: 1px solid white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .textarea input{
+          width: 80%;
+          outline: none;
+          border: none;
+          background: none;
+          font-size: 4vh ;
+          text-align: center;
+        }
+      .settings {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        padding: 10px 40px;
+        height: 43vh;
+        user-select: none;
+        justify-content: space-evenly;
+      }
+      .settings::before{
+        content: "Password Settings :";
+        /* font-size: larger; */
+      }
+      #lenght{
+        width: 100%;
+      }
+      .btn{
+        /* position: absolute;
+        bottom: 3vh;
+        left: 50%;
+        transform: translateX(-50%); */
+        display: flex;
+        justify-content: space-around;
+
+      }
+      button{
+        /* padding: 1vh 2vw; */
+        flex-grow: 1;
+        margin: 0px 20px;
+        padding: 1vh;
+        outline: none;
+        border: 2px groove white;
+        background-color: rgb(0, 156, 21);
+        background: linear-gradient(rgb(35, 137, 0) , rgb(33, 104, 0),rgb(35, 136, 0));
+        /* background: linear-gradient(rgb(255, 78, 2) , rgb(240, 0, 0),rgb(255,78, 0)); */
+        /* background-color: aliceblue; */
+        color: white;
+        /* color: black; */
+        font-size: large;
+        border-radius: 5px;
+        user-select: none;
+        box-shadow: inset 0px 0px 5px greenyellow;
+        /* box-shadow: 0px 0px 5px rgb(255, 106, 47); */
+      }
+      button:hover{
+        box-shadow: 0px 0px 1px white;
+        background: rgb(73, 244, 5);
+        color: green;
+        border-color: rgb(0, 255, 68);
+      }
+      button:active{
+        background: rgb(0, 50, 0);
+        box-shadow: none;
+        color: white;
+      }
+      img{
+        height: 4vh;
+      }
+      #rangeVal{
+        text-align: center  ;
+      }
+      #tooltip{
+        position: absolute;
+        top:4px;
+        visibility: hidden;
+        background-color: antiquewhite;
+        color: black;
+        padding: 2px 6px;
+        border-radius: 5px;
+      }
+      @media screen and (max-width: 600px) {
+        body{
+          visibility: hidden;
+        }
+        body::after{
+          content: 'We Prefer Desktop devices to view this website.';
+          color: white;
+          position: absolute;
+          top:50%;
+          left: 50%;
+          transform: translate(-50%,-50%);
+          text-align: center;
+          font-size: x-large;
+          font-family:'Courier New', Courier, monospace;
+          visibility: visible;
+        }
+  }
+    </style>
+     <script>  
+     function fun(){
+       var lower = document.getElementById('lower').checked
+       var upper = document.getElementById('upper').checked
+       var numbers = document.getElementById('numbers').checked
+       var symbols = document.getElementById('symbols').checked
+       var lenght = document.getElementById("lenght").value
+       var l = lenght;
+       var pass ='';
+       if (lower || upper || symbols ||numbers){
+       var c=0;
+       var chars = 'abcdefghijklmnopqrstuvwxyz';
+       var nums = '0123456789';
+       var symb = '!@#$%^&*';
+       (lower)?c++:null;
+       (upper)?c++:null;
+       (numbers)?c++:null;
+       (symbols)?c++:null;
+       window.c = c;
+       while(lenght>0){
+         lenght=lenght-c;
+        (lower)?pass+=chars[Math.floor(Math.random()*chars.length)]:(null);
+        (upper)?pass+=chars[Math.floor(Math.random()*chars.length)].toUpperCase():null;
+        (numbers)?pass+=nums[Math.floor(Math.random()*nums.length)]:null;
+        (symbols)?pass+=symb[Math.floor(Math.random()*symb.length)]:null;
+      }
+      pass=pass.slice(0,l);
+      document.getElementById('output').value=pass;
+       }else{
+        alert('Please select atleast one field ');
+       }
+      // console.log('password = '+pass);
+      // console.log('lenght = ' + l +' & pass = '+pass.length );
+      }
+     function copy(){
+       if(document.getElementById('output').value ===""){
+         document.getElementById('tooltip').innerHTML ='Nothing to copy';
+         document.getElementById('tooltip').style.visibility ='visible';
+         setTimeout(()=>{
+           document.getElementById('tooltip').style.visibility ='hidden';
+          },1000)
+        }else{
+        var copyText = document.getElementById("output");
+      copyText.select();
+      copyText.setSelectionRange(0, 999);
+      navigator.clipboard.writeText(copyText.value);
+      console.log(" copies " + copyText.value);
+      document.getElementById('tooltip').innerHTML ='Copied';
+      document.getElementById('tooltip').style.visibility ='visible';
+      setTimeout(()=>{
+        document.getElementById('tooltip').style.visibility ='hidden';
+      },1000)
+      }
+     
+     }
+     function reset(){
+      document.getElementById('output').value ='';
+    }
+     function handleRange(val){
+      document.getElementById("rangeVal").innerHTML = val;
+     }
+     </script>
+  </head>
+  <body>
+    <h1>Random Password Generator</h1>
+    <div class="card" id="card">
+      <div class="textarea">
+        <span id="tooltip">Copied</span>
+        <input type="text" id="output" placeholder="Your Password" value="" readonly>
+        <img src="https://cdn-icons-png.flaticon.com/512/54/54853.png" alt=" copy icon" onclick="copy()" title="Copy to clipboard">
+      </div>
+      <div class="settings"><hr>
+        <span><input type="checkbox" name="set" id="lower"  checked/> &emsp; LowerCase (a-z)</span>
+        <span><input type="checkbox" name="set" id="upper" checked /> &emsp; UpperCase (A-Z)</span>
+        <span><input type="checkbox" name="set" id="numbers" /> &emsp; Numbers (0-9)</span>
+        <span><input type="checkbox" name="set" id="symbols" /> &emsp; Symbols (!@#$^*%)</span>
+        <hr>
+        <span>Password Lenght :&nbsp;<span id="rangeVal">8</span></span>
+        <span><input type="range" name="lenght"  min="4" max="20" value="8" id="lenght" oninput="handleRange(this.value)"></span>
+      </div>
+      <div class="btn">
+        <button onclick="fun()">Generate</button>
+        <button onclick="reset()">Clear</button>
+      </div>
+    </div>
+  </body>
+</html>
